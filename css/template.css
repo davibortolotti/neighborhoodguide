@@ -1,0 +1,99 @@
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+
+}
+
+.myfont {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+}
+
+.title {
+  color: white;
+  font-size: 2.5em;
+  font-family: 'Dancing Script', cursive;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 20px;
+  height: 10%;
+}
+.darkbackground {
+  background-color: #2C3E50;
+}
+
+.lateralbar {
+  float: left;
+  width: 10%;
+  min-width: 100px;
+}
+
+.hide {
+  display: none;
+}
+.navbutton {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #2C3E50;
+  border: 2px solid #F5AB35;
+  border-bottom: 0 solid #F5AB35;
+  color: #F5AB35;
+}
+
+.navbutton:last-child {
+  border-bottom: 2px solid #F5AB35;
+}
+.navbutton:hover {
+  background-color: #34495E;
+}
+.navbutton:focus  {
+  color: #2C3E50;
+  outline: none;
+  background-color: #F5AB35;
+}
+
+.filter {
+  margin-bottom: 10px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#filterbutton {
+  background-color: #F5AB35;
+  color: #2C3E50;
+  flex-basis: 30px;
+  height: 24px;
+  margin: 2px 4px;
+  padding: 0px;
+}
+
+#select {
+  flex-basis: 100px;
+  margin: 2px 4px;
+}
+
+#map {
+  height: 100%;
+}
+.content {
+  height: 90%;
+}
+
+#placelist {
+  float: left;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+  .venuephoto {
+    width: 80px;
+    height: 60px;
+  }

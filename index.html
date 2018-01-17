@@ -1,0 +1,38 @@
+<!doctype HTML>
+
+<html>
+  <head >
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/template.css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700|Quicksand" rel="stylesheet">
+    <script src="./lib/jquery-3.2.1.js"></script>
+    <script src="./lib/knockout-3.4.2.js"></script>
+
+  </head>
+
+  <body class="darkbackground">
+    <h1 class="title">The Laranjeiras Guide</h1>
+
+    <div class="content">
+      <aside class="lateralbar">
+        <div class="filter">
+          <select id="select" class="myfont "data-bind="options: types, optionsCaption: 'Show all', value: value, valueAllowUnset: true"></select>
+          <button id="filterbutton" class="myfont navbutton" data-bind="click: filter">Filter</button>
+        </div>
+        <ul id="placelist" data-bind="foreach: venues">
+          <button class="myfont navbutton" data-bind="text: title, click: zoomTo"></button>
+        </ul>
+      </aside>
+
+      <div id="map"></div>
+    </div>
+
+
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6_U6QeTd2MZnmxK70TJpYEYW0_Ruh3Y"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
