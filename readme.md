@@ -1,4 +1,4 @@
-# Project Neighborhood Mapa
+# Project Neighborhood Map
 
 This is a project for Udacity "Full-stack developer" course.
 
