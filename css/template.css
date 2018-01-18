@@ -1,10 +1,10 @@
 /* Optional: Makes the sample page fill the window. */
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   font-size: 100%;
-
 }
 
 .myfont {
@@ -18,9 +18,11 @@ html, body {
   font-family: 'Dancing Script', cursive;
   box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
   height: 10%;
+  display: inline-block;
 }
+
 .darkbackground {
   background-color: #2C3E50;
 }
@@ -29,11 +31,11 @@ html, body {
   float: left;
   width: 10%;
   min-width: 100px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.hide {
-  display: none;
-}
 .navbutton {
   display: block;
   width: 100%;
@@ -47,9 +49,11 @@ html, body {
 .navbutton:last-child {
   border-bottom: 2px solid #F5AB35;
 }
+
 .navbutton:hover {
   background-color: #34495E;
 }
+
 .navbutton:focus  {
   color: #2C3E50;
   outline: none;
@@ -81,8 +85,9 @@ html, body {
 #map {
   height: 100%;
 }
+
 .content {
-  height: 90%;
+  height: 85%;
 }
 
 #placelist {
@@ -92,8 +97,60 @@ html, body {
   width: 100%;
 }
 
+#menubutton {
+  display: none;
+  width: auto;
+  height: 30px;
+  margin: auto;
+  background-color: #F5AB35;
+  color: #2C3E50;
+  padding: 0 5px;
+  margin-left: 20px;
+}
+
+.footer {
+  color: white;
+  padding-top: 14px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.link {
+  color: #F5AB35;
+}
+
 @media screen and (max-width: 480px) {
+  .title {
+    font-size: 2em;
+    padding-left: 8px;
+  }
+
   .venuephoto {
     width: 80px;
     height: 60px;
   }
+
+  #menubutton {
+    display: inline-block;
+  }
+
+  .hide {
+    display: none!important;
+  }
+
+  .infowindowfont {
+    font-size: .8em;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .title {
+    font-size: 1.5em;
+    padding-left: 4px;
+    padding-top: 16px;
+  }
+
+  #menubutton {
+    margin-left: 6px;
+  }
+}
