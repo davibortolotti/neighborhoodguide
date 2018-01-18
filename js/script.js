@@ -3,7 +3,7 @@ var largeInfowindow;
 var markers = [];
 
 var initMap = function() {
-  try {
+  // try {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat:-22.9361870, lng:-43.1897190 },
       zoom: 15,
@@ -16,44 +16,61 @@ var initMap = function() {
         position = places[i].location;
         title = places[i].title;
         type = places[i].type;
-        icon = function() {
-          if (places[i].type == 'Restaurant') { // icon managing
-            return './img/restaurant.png';
-          } else if (places[i].type == 'Park') {
-            return './img/park.png';
-          } else if (places[i].type == 'Market') {
-            return './img/market.png';
-          } else if (places[i].type == 'Club') {
-            return './img/club.png';
-          } else {
-            return './img/club.png';
-          }
-        };
+        icon = defineIcon();
         marker = new google.maps.Marker({
           position: position,
           map: map,
           title: title,
           type: type,
-          icon: icon()
+          icon: icon
         });
         marker.addListener('click', function() {
-          self = this;
-          var lat = self.getPosition().lat() + 0.005;
-          var lng = self.getPosition().lng();
+          var lat = this.getPosition().lat() + 0.005;
+          var lng = this.getPosition().lng();
           map.panTo({lat: lat, lng: lng});
-          populateInfoWindow(self, largeInfowindow);
-          bounceOnce(self);
+          populateInfoWindow(this, largeInfowindow);
+          bounceOnce(this);
         });
         markers.push(marker);
       }
     };
 
-    CreateMarkers();
+    // var markerClick = function(marker) {
+    //   console.log(marker);
+    //   var lat = marker.getPosition().lat() + 0.005;
+    //   var lng = marker.getPosition().lng();
+    //   map.panTo({lat: lat, lng: lng});
+    //   populateInfoWindow(marker, largeInfowindow);
+    //   bounceOnce(marker);
+    // }
+
+    var defineIcon = function() {
+      if (places[i].type == 'Restaurant') { // icon managing
+        return './img/restaurant.png';
+      } else if (places[i].type == 'Park') {
+        return './img/park.png';
+      } else if (places[i].type == 'Market') {
+        return './img/market.png';
+      } else if (places[i].type == 'Club') {
+        return './img/club.png';
+      } else {
+        return './img/club.png';
+      }
+    };
 
     var bounceOnce = function(self) {
       self.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function(){ self.setAnimation(null); }, 750); // makes the marker bounce only once
     };
+
+    // var markerClick = function(self) {
+    //   console.log('markerclick run')
+    //   var lat = self.getPosition().lat() + 0.005;
+    //   var lng = self.getPosition().lng();
+    //   map.panTo({lat: lat, lng: lng});
+    //   populateInfoWindow(self, largeInfowindow);
+    //   bounceOnce(self);
+    // };
 
     // populates the infowindow with foursquare information and opens it
     var populateInfoWindow = function(marker, infowindow) {
@@ -65,7 +82,6 @@ var initMap = function() {
         //calls the foursquare API through AJAX
         var foursquareSearch = function() {
           var foursquare_url = 'https://api.foursquare.com/v2/venues/';
-
           // first ajax call, gets the venue ID
           jQuery.ajax(foursquare_url + "search", {
             data: {
@@ -74,61 +90,61 @@ var initMap = function() {
               v: "20180112",
               query: marker.title,
               ll: marker.getPosition().lat() + ", " + marker.getPosition().lng()
-            },
-
-            success: function(data) {
-              // SECOND ajax call, gets the venue INFO using the id
-              marker.venue_id = data.response.venues[0].id;
-              jQuery.ajax(foursquare_url + marker.venue_id, {
-                data: {
-                  client_secret: '0JTQ4K5Q11EHF5LCARZAD4V5PQTEGXXK5UXOHM3CLJJKH1MX' ,
-                  client_id:'S3ZMCRJKWGUOXIZAHLMDS51WE5QLDFUZHVAVMJEKTPKH1QMY',
-                  v: "20180112"
-                },
-
-                success: function (data) {
-                  // sets the content of the info window
-                  content = '<div class="myfont infowindowfont"><h2><a class="link" href="' + data.response.venue.canonicalUrl + '">' + data.response.venue.name + '</a></h2>';
-                  content += '<p>' + data.response.venue.location.address + '</p>';
-                  if (data.response.venue.hours !== undefined) {
-                    content += '<p>' + data.response.venue.hours.status + '</p>';
-                  }
-                  content += '<h3>' + data.response.venue.categories[0].name + '</h3>';
-                  for (i = 0; i < 2; i++) {
-                    prefix = data.response.venue.photos.groups[0].items[i].prefix;
-                    suffix = data.response.venue.photos.groups[0].items[i].suffix;
-                    smphotourl = prefix + '200x140' + suffix;
-                    oriphotourl = prefix + 'original' + suffix;
-                    content += '<a href=' + oriphotourl +'><img class="venuephoto" src="'+ smphotourl + '"></a>';
-                  }
-
-                  if (data.response.venue.price !== undefined) {
-                    content += '<h3>Preço: ' + data.response.venue.price.message + '</h3>';
-                  }
-                  content += '</div>';
-                  infowindow.setContent(content);
-                },
-                error: function() { // error handling for foursquare second level ajax
-                  alert("Error loading foursquare API to get the place's details." );
-                }
-
-
-              });
-            },
-            error: function() { // error handling for foursquare first level ajax
-              alert("Error loading foursquare API.");
             }
+          }).done(function(data) {
+            // SECOND ajax call, gets the venue INFO using the id
+            marker.venue_id = data.response.venues[0].id;
+            jQuery.ajax(foursquare_url + marker.venue_id, {
+              data: {
+                client_secret: '0JTQ4K5Q11EHF5LCARZAD4V5PQTEGXXK5UXOHM3CLJJKH1MX' ,
+                client_id:'S3ZMCRJKWGUOXIZAHLMDS51WE5QLDFUZHVAVMJEKTPKH1QMY',
+                v: "20180112"
+              }
+            }).done(function (data) {
+              // sets the content of the info window
+              content = '<div class="myfont infowindowfont"><h2><a class="link" href="' + data.response.venue.canonicalUrl + '">' + data.response.venue.name + '</a></h2>';
+              content += '<p>' + data.response.venue.location.address + '</p>';
+              if (data.response.venue.hours !== undefined) {
+                content += '<p>' + data.response.venue.hours.status + '</p>';
+              }
+              content += '<h3>' + data.response.venue.categories[0].name + '</h3>';
+              for (i = 0; i < 2; i++) {
+                prefix = data.response.venue.photos.groups[0].items[i].prefix;
+                suffix = data.response.venue.photos.groups[0].items[i].suffix;
+                smphotourl = prefix + '200x140' + suffix;
+                oriphotourl = prefix + 'original' + suffix;
+                content += '<a href=' + oriphotourl +'><img class="venuephoto" src="'+ smphotourl + '"></a>';
+              }
+              if (data.response.venue.price !== undefined) {
+                content += '<h3>Preço: ' + data.response.venue.price.message + '</h3>';
+              }
+              content += '</div>';
+              infowindow.setContent(content);
+
+
+            }).fail(function() { // error handling for foursquare second level ajax
+              alert("Error loading foursquare API to get the place's details." );
+            });
+          }).fail(function() {
+            alert("Error loading foursquare API.");
           });
-        };
+        }; // end of foursquare ajax call
       }
       foursquareSearch();
       infowindow.open(map, marker);
-    };
+    }
+    CreateMarkers();
 
-  } catch(error) { // error handling for google maps api
-    alert("There was an error while loading the Google Maps API. So sorry. ):");
-  }
+  ko.applyBindings(myViewModel);
+
+  // } catch(error) { // error handling for google maps api
+  //   alert("There was an error while loading the Google Maps API. So sorry. ):");
+  // }
 };
+
+var googleError = function() {
+  alert("There was an error while sending a request to the Google Server. Please check your firewall or hosts file.")
+}
 
 
 var myViewModel = function() {
@@ -182,14 +198,18 @@ var myViewModel = function() {
   this.menuClick = function(){ //binds clicking action to the menu button
     $('.lateralbar').toggleClass('hide');
   };
+  this.mapheight = ko.observable($('#map').css('height'));
+  $(window).resize( function() {
+    this.mapheight($('#map').css('height'))
+    console.log('Reszied')
+  });
 };
+//
+// initMap();
 
-initMap();
-ko.applyBindings(myViewModel);
 
-// FIXING THE SCROLL BAR FOR THE LATERAL NAVIGATION BAR
-$('.lateralbar').css('max-height', $('#map').css('height'));
-$(window).resize( function() {
-  console.log('hi');
-  $('.lateralbar').css('max-height', $('#map').css('height'));
-});
+// // FIXING THE SCROLL BAR FOR THE LATERAL NAVIGATION BAR
+// $('.lateralbar').css('max-height', $('#map').css('height'));
+// $(window).resize( function() {
+//   $('.lateralbar').css('max-height', $('#map').css('height'));
+// });

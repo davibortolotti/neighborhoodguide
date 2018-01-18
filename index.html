@@ -17,7 +17,7 @@
       <h1 class="title">The Laranjeiras Guide</h1>
     </header>
     <div class="content">
-      <aside class="lateralbar hide">
+      <aside class="lateralbar hide" data-bind="style: { maxHeight: mapheight }">
         <div class="filter">
           <select id="select" class="myfont" data-bind="options: types, optionsCaption: 'Show all', value: value, valueAllowUnset: true"></select>
           <button id="filterbutton" class="myfont navbutton" data-bind="click: filter">Filter</button>
@@ -31,10 +31,10 @@
     <footer class="myfont footer">This application utilizes the <a class="link" href="https://developer.foursquare.com/">
       Foursquare API</a> to get the place's information and the <a class="link" href="https://developers.google.com/maps/documentation/javascript/?hl=pt-br">
       Google Maps Javascript API</a> for rendering it. Made by Davi Bortolotti in 2018.</footer>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6_U6QeTd2MZnmxK70TJpYEYW0_Ruh3Y"></script>
+    <script async sdefer src="./js/script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6_U6QeTd2MZnmxK70TJpYEYW0_Ruh3Y&callback=initMap" onerror="googleError()"></script>
     <script src="./js/mapstyles.js"></script>
     <script src="./js/places.js"></script>
-    <script src="./js/script.js"></script>
+
   </body>
 </html>
