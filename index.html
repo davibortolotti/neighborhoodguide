@@ -18,7 +18,6 @@
       <aside class="lateralbar hide" data-bind="style: { maxHeight: mapheight }">
         <div class="filter">
           <select id="select" class="myfont" data-bind="options: types, optionsCaption: 'Show all', value: value, valueAllowUnset: true"></select>
-          <!-- <button id="filterbutton" class="myfont navbutton" data-bind="click: filter">Filter</button> -->
         </div>
         <div id="placelist" data-bind="foreach: filterPlaces">
           <button class="myfont navbutton" data-bind="text: title, click: zoomTo"></button>
