@@ -12,11 +12,11 @@ var initMap = function() {
     largeInfowindow = new google.maps.InfoWindow();
     // Create all the markers through the places array
     var CreateMarkers = function() {
-      for (i = 0; i < places.length; i++) {
+      for (var i = 0; i < places.length; i++) {
         position = places[i].location;
         title = places[i].title;
         type = places[i].type;
-        icon = defineIcon();
+        icon = defineIcon(i);
         marker = new google.maps.Marker({
           position: position,
           map: map,
@@ -36,7 +36,7 @@ var initMap = function() {
     };
 
 
-    var defineIcon = function() {
+    var defineIcon = function(i) {
       if (places[i].type == 'Restaurant') { // icon managing
         return './img/restaurant.png';
       } else if (places[i].type == 'Park') {
@@ -91,7 +91,7 @@ var initMap = function() {
                 content += '<p>' + data.response.venue.hours.status + '</p>';
               }
               content += '<h3>' + data.response.venue.categories[0].name + '</h3>';
-              for (i = 0; i < 2; i++) {
+              for (var i = 0; i < 2; i++) {
                 prefix = data.response.venue.photos.groups[0].items[i].prefix;
                 suffix = data.response.venue.photos.groups[0].items[i].suffix;
                 smphotourl = prefix + '200x140' + suffix;
@@ -128,58 +128,52 @@ var googleError = function() {
 
 
 var myViewModel = function() {
-  this.venues = ko.observableArray();
-  refreshMarkers();
-  this.types = [];
-  for (i=0; i < markers.length; i++) {
-    var type = markers[i].type;
-    if (types.indexOf(type) === -1) { // check if typelist already contains this entry
-      types.push(type);
+  categoryList = [];
+  places.map(place => {
+    if (!categoryList.includes(place.type))
+      categoryList.push(place.type);
+  });
+
+  this.placelist = ko.observableArray(places);
+  this.types = ko.observableArray(this.categoryList);
+
+  this.value = ko.observable();
+
+  this.filterPlaces = ko.computed(() => {
+    largeInfowindow.close();
+    if (value() === undefined){ // clears the filter
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setVisible(true);
+        return placelist();
+      }
+    } else {
+      for (var i = 0; i < markers.length; i++) { // changes visibility according to filter
+        if (markers[i].type == value()) {
+          markers[i].setVisible(true);
+        } else {
+          markers[i].setVisible(false);
+        }
+        return ko.utils.arrayFilter(placelist(), (place) => {
+          return ( place.type === value() );
+        });
+      }
     }
-  }
+  });
 
   this.zoomTo = function(){ // triggers the effect of clicking a marker, and thus zooming into it
-    for (i = 0; i < markers.length; i++) {
+    for (var i = 0; i < markers.length; i++) {
       if (markers[i].title == this.title) {
         google.maps.event.trigger(markers[i], 'click');
       }
     }
   };
 
-  this.value = ko.observable();
-
-  this.filter = function(){
-    largeInfowindow.close();
-    if (this.value() === undefined){ // clears the filter
-      for (i = 0; i < markers.length; i++) {
-        markers[i].setVisible(true);
-      }
-    } else {
-      for (i = 0; i < markers.length; i++) { // changes visibility according to filter
-        if (markers[i].type == this.value()) {
-          markers[i].setVisible(true);
-        } else {
-          markers[i].setVisible(false);
-        }
-      }
-    }
-    venues.removeAll(); // clears placelist in order to render again
-    refreshMarkers(); // renders place list bar
-  };
-
-  function refreshMarkers() { // pushes all visible markers into the venues list
-    for (i = 0; i < markers.length; i++){
-      if (markers[i].getVisible()){
-        venues.push(markers[i]);
-      }
-    }
-  }
-
   this.menuClick = function(){ //binds clicking action to the menu button
     $('.lateralbar').toggleClass('hide');
   };
+
   this.mapheight = ko.observable($('#map').css('height'));
   $(window).resize( function() {
     this.mapheight($('#map').css('height'))
   });
-};
+}

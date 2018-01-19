@@ -18,9 +18,9 @@
       <aside class="lateralbar hide" data-bind="style: { maxHeight: mapheight }">
         <div class="filter">
           <select id="select" class="myfont" data-bind="options: types, optionsCaption: 'Show all', value: value, valueAllowUnset: true"></select>
-          <button id="filterbutton" class="myfont navbutton" data-bind="click: filter">Filter</button>
+          <!-- <button id="filterbutton" class="myfont navbutton" data-bind="click: filter">Filter</button> -->
         </div>
-        <div id="placelist" data-bind="foreach: venues">
+        <div id="placelist" data-bind="foreach: filterPlaces">
           <button class="myfont navbutton" data-bind="text: title, click: zoomTo"></button>
         </div>
       </aside>
@@ -29,6 +29,7 @@
     <footer class="myfont footer">This application utilizes the <a class="link" href="https://developer.foursquare.com/">
       Foursquare API</a> to get the place's information and the <a class="link" href="https://developers.google.com/maps/documentation/javascript/?hl=pt-br">
       Google Maps Javascript API</a> for rendering it. Made by Davi Bortolotti in 2018.</footer>
+
     <script src="./lib/jquery-3.2.1.js"></script>
     <script src="./lib/knockout-3.4.2.js"></script>
     <script src="./js/script.js"></script>
