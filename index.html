@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/template.css">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700|Quicksand" rel="stylesheet">
-    <script src="./lib/jquery-3.2.1.js"></script>
-    <script src="./lib/knockout-3.4.2.js"></script>
   </head>
 
   <body class="darkbackground">
@@ -31,10 +29,12 @@
     <footer class="myfont footer">This application utilizes the <a class="link" href="https://developer.foursquare.com/">
       Foursquare API</a> to get the place's information and the <a class="link" href="https://developers.google.com/maps/documentation/javascript/?hl=pt-br">
       Google Maps Javascript API</a> for rendering it. Made by Davi Bortolotti in 2018.</footer>
-    <script async sdefer src="./js/script.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6_U6QeTd2MZnmxK70TJpYEYW0_Ruh3Y&callback=initMap" onerror="googleError()"></script>
+    <script src="./lib/jquery-3.2.1.js"></script>
+    <script src="./lib/knockout-3.4.2.js"></script>
+    <script src="./js/script.js"></script>
     <script src="./js/mapstyles.js"></script>
     <script src="./js/places.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6_U6QeTd2MZnmxK70TJpYEYW0_Ruh3Y&callback=initMap" onerror="googleError()"></script>
 
   </body>
 </html>

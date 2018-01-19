@@ -35,14 +35,6 @@ var initMap = function() {
       }
     };
 
-    // var markerClick = function(marker) {
-    //   console.log(marker);
-    //   var lat = marker.getPosition().lat() + 0.005;
-    //   var lng = marker.getPosition().lng();
-    //   map.panTo({lat: lat, lng: lng});
-    //   populateInfoWindow(marker, largeInfowindow);
-    //   bounceOnce(marker);
-    // }
 
     var defineIcon = function() {
       if (places[i].type == 'Restaurant') { // icon managing
@@ -62,15 +54,6 @@ var initMap = function() {
       self.setAnimation(google.maps.Animation.BOUNCE);
       setTimeout(function(){ self.setAnimation(null); }, 750); // makes the marker bounce only once
     };
-
-    // var markerClick = function(self) {
-    //   console.log('markerclick run')
-    //   var lat = self.getPosition().lat() + 0.005;
-    //   var lng = self.getPosition().lng();
-    //   map.panTo({lat: lat, lng: lng});
-    //   populateInfoWindow(self, largeInfowindow);
-    //   bounceOnce(self);
-    // };
 
     // populates the infowindow with foursquare information and opens it
     var populateInfoWindow = function(marker, infowindow) {
@@ -137,9 +120,6 @@ var initMap = function() {
 
   ko.applyBindings(myViewModel);
 
-  // } catch(error) { // error handling for google maps api
-  //   alert("There was an error while loading the Google Maps API. So sorry. ):");
-  // }
 };
 
 var googleError = function() {
@@ -201,15 +181,5 @@ var myViewModel = function() {
   this.mapheight = ko.observable($('#map').css('height'));
   $(window).resize( function() {
     this.mapheight($('#map').css('height'))
-    console.log('Reszied')
   });
 };
-//
-// initMap();
-
-
-// // FIXING THE SCROLL BAR FOR THE LATERAL NAVIGATION BAR
-// $('.lateralbar').css('max-height', $('#map').css('height'));
-// $(window).resize( function() {
-//   $('.lateralbar').css('max-height', $('#map').css('height'));
-// });
